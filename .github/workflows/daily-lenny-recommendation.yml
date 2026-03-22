@@ -1,0 +1,35 @@
+name: Daily Lenny Recommendation
+
+on:
+  schedule:
+    # 每天北京时间 8:30 (UTC 0:30)
+    - cron: '30 0 * * *'
+  workflow_dispatch: # 允许手动触发测试
+
+jobs:
+  recommend:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Pick daily Lenny content
+        id: pick
+        run: python scripts/daily_lenny_pick.py
+
+      - name: Create GitHub Issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create \
+            --title "${{ steps.pick.outputs.title }}" \
+            --body-file "${{ steps.pick.outputs.body_file }}" \
+            --label "lenny-daily"
