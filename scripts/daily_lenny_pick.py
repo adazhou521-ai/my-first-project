@@ -5,6 +5,8 @@ import json
 import hashlib
 import os
 import sys
+import urllib.request
+import urllib.parse
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
@@ -75,6 +77,33 @@ def format_issue(item, today, content_preview):
     return title, body
 
 
+def send_wechat(title, body, token):
+    """Send notification to WeChat via PushPlus."""
+    url = "http://www.pushplus.plus/send"
+    # Convert markdown to simple HTML-friendly format
+    data = json.dumps({
+        "token": token,
+        "title": title,
+        "content": body,
+        "template": "markdown",
+    }).encode("utf-8")
+
+    req = urllib.request.Request(
+        url,
+        data=data,
+        headers={"Content-Type": "application/json"},
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            result = json.loads(resp.read().decode())
+            if result.get("code") == 200:
+                print(f"WeChat push succeeded: {result.get('msg')}")
+            else:
+                print(f"WeChat push failed: {result}", file=sys.stderr)
+    except Exception as e:
+        print(f"WeChat push error: {e}", file=sys.stderr)
+
+
 def main():
     index_data = load_index()
     item, today = pick_daily_item(index_data)
@@ -82,13 +111,11 @@ def main():
     title, body = format_issue(item, today, content_preview)
 
     # Output for GitHub Actions
-    # Write to files to handle multiline
     output_dir = os.environ.get("GITHUB_OUTPUT", "")
     if output_dir:
         with open(output_dir, "a") as f:
             f.write(f"title={title}\n")
 
-        # Write body to a temp file for the workflow
         body_file = Path(os.environ.get("RUNNER_TEMP", "/tmp")) / "issue_body.md"
         body_file.write_text(body, encoding="utf-8")
         with open(output_dir, "a") as f:
@@ -97,6 +124,13 @@ def main():
         # Local testing
         print(f"Title: {title}\n")
         print(body)
+
+    # Send to WeChat if token is available
+    pushplus_token = os.environ.get("PUSHPLUS_TOKEN", "")
+    if pushplus_token:
+        send_wechat(title, body, pushplus_token)
+    else:
+        print("(No PUSHPLUS_TOKEN set, skipping WeChat push)")
 
 
 if __name__ == "__main__":

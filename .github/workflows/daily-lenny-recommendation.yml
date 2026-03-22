@@ -21,8 +21,10 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Pick daily Lenny content
+      - name: Pick daily Lenny content and push to WeChat
         id: pick
+        env:
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
         run: python scripts/daily_lenny_pick.py
 
       - name: Create GitHub Issue
