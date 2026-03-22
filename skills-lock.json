@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "lennys-podcast-newsletter": {
+      "source": "joeseesun/lennys-podcast-newsletter",
+      "sourceType": "github",
+      "computedHash": "e852d186d380a96234d288fb722c7bbea24cd774b685bb3880eb00d7bce34621"
+    }
+  }
+}
