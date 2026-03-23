@@ -1,8 +1,8 @@
 # lennys-podcast-newsletter
 
-> Lenny Rachitsky 播客与 Newsletter 知识库 — 用自然语言搜索、阅读和学习 638 篇硅谷顶级产品内容
+> Ada 的 Lenny 研究助手 — 从 638 篇 Lenny 内容中提取 AI 框架/理论、产品实践、法律合规洞察
 
-> Search, read, and learn from Lenny Rachitsky's 638 podcasts & newsletters using natural language
+> Lenny research skill for Ada — Extract AI frameworks, product practices, and legal insights from 638 Lenny articles
 
 **[English](#english) | [中文](#中文)**
 
@@ -13,7 +13,7 @@
 
 ### What This Does
 
-Turn Lenny Rachitsky's complete content archive into a searchable knowledge base for Claude Code. Ask questions about product management, growth, design, AI, leadership — Claude searches through 289 podcast transcripts and 349 newsletter articles to give you answers with sources.
+A research skill that helps Ada extract actionable insights from Lenny Rachitsky's content archive, focused on **AI frameworks/theories, product practices, and legal/compliance topics**. Claude searches through 289 podcast transcripts and 349 newsletter articles, then synthesizes findings from Ada's perspective.
 
 ### Content Overview
 
@@ -84,7 +84,7 @@ Just ask Claude naturally:
 
 ### 功能
 
-将 Lenny Rachitsky 的完整内容存档变成 Claude Code 可搜索的知识库。用自然语言提问关于产品管理、增长、设计、AI、领导力的问题，Claude 会搜索 289 篇播客转录和 349 篇 Newsletter 来回答，并标注来源。
+Ada 的 Lenny 研究助手 — 从 638 篇 Lenny 内容中提取与 **AI 框架/理论、产品实践、法律合规** 相关的洞察，辅助 Ada 的判断和学习。不是通用资料库，而是聚焦于 AI 产品策略、方法论和法律风险的研究工具。
 
 ### 内容概览
 
